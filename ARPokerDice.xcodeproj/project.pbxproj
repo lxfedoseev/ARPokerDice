@@ -8,22 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		D97F741F21F642190084F5A6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97F741E21F642190084F5A6 /* AppDelegate.swift */; };
-		D97F742121F6421A0084F5A6 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = D97F742021F6421A0084F5A6 /* art.scnassets */; };
 		D97F742321F6421A0084F5A6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97F742221F6421A0084F5A6 /* ViewController.swift */; };
 		D97F742621F6421A0084F5A6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D97F742421F6421A0084F5A6 /* Main.storyboard */; };
 		D97F742821F642210084F5A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D97F742721F642210084F5A6 /* Assets.xcassets */; };
 		D97F742B21F642210084F5A6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D97F742921F642210084F5A6 /* LaunchScreen.storyboard */; };
+		D97F743321F642E30084F5A6 /* PokerDice.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = D97F743221F642E30084F5A6 /* PokerDice.scnassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		D97F741B21F642190084F5A6 /* ARPokerDice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARPokerDice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D97F741E21F642190084F5A6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D97F742021F6421A0084F5A6 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		D97F742221F6421A0084F5A6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D97F742521F6421A0084F5A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D97F742721F642210084F5A6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D97F742A21F642210084F5A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D97F742C21F642210084F5A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D97F743221F642E30084F5A6 /* PokerDice.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = PokerDice.scnassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,8 +56,8 @@
 		D97F741D21F642190084F5A6 /* ARPokerDice */ = {
 			isa = PBXGroup;
 			children = (
+				D97F743221F642E30084F5A6 /* PokerDice.scnassets */,
 				D97F741E21F642190084F5A6 /* AppDelegate.swift */,
-				D97F742021F6421A0084F5A6 /* art.scnassets */,
 				D97F742221F6421A0084F5A6 /* ViewController.swift */,
 				D97F742421F6421A0084F5A6 /* Main.storyboard */,
 				D97F742721F642210084F5A6 /* Assets.xcassets */,
@@ -125,7 +125,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D97F742121F6421A0084F5A6 /* art.scnassets in Resources */,
+				D97F743321F642E30084F5A6 /* PokerDice.scnassets in Resources */,
 				D97F742B21F642210084F5A6 /* LaunchScreen.storyboard in Resources */,
 				D97F742821F642210084F5A6 /* Assets.xcassets in Resources */,
 				D97F742621F6421A0084F5A6 /* Main.storyboard in Resources */,

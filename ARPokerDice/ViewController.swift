@@ -13,6 +13,23 @@ import ARKit
 class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
+    @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var startButton: UIButton!
+    @IBOutlet weak var styleButton: UIButton!
+    @IBOutlet weak var resetButton: UIButton!
+    
+    @IBAction func startButtonPressed(_ sender: Any) {
+    }
+    
+    @IBAction func styleButtonPressed(_ sender: Any) {
+    }
+    
+    @IBAction func resetButtonPressed(_ sender: Any) {
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,10 +41,13 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.showsStatistics = true
         
         // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+        //let scene = SCNScene(named: "art.scnassets/ship.scn")!
+        let scene = SCNScene(named: "PokerDice.scnassets/SimpleScene.scn")!
         
         // Set the scene to the view
         sceneView.scene = scene
+        
+        statusLabel.text = "Greetings! :]"
     }
     
     override func viewWillAppear(_ animated: Bool) {
