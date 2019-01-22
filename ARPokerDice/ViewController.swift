@@ -1,95 +1,175 @@
-//
-//  ViewController.swift
-//  ARPokerDice
-//
-//  Created by Alex Fedoseev on 21.01.2019.
-//  Copyright © 2019 Alex Fedoseev. All rights reserved.
-//
+/**
+ * Copyright (c) 2018 Razeware LLC
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
+ * distribute, sublicense, create a derivative work, and/or sell copies of the
+ * Software in any work that is designed, intended, or marketed for pedagogical or
+ * instructional purposes related to programming, coding, application development,
+ * or information technology.  Permission for such use, copying, modification,
+ * merger, publication, distribution, sublicensing, creation of derivative works,
+ * or sale is expressly withheld.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 
 import UIKit
 import SceneKit
 import ARKit
 
-class ViewController: UIViewController, ARSCNViewDelegate {
+class ViewController: UIViewController {
+  
+  // MARK: - Properties
+  var trackingStatus: String = ""
+    
+  // MARK: - Outlets
+  
+  @IBOutlet var sceneView: ARSCNView!
+  @IBOutlet weak var statusLabel: UILabel!
+  @IBOutlet weak var startButton: UIButton!
+  @IBOutlet weak var styleButton: UIButton!
+  @IBOutlet weak var resetButton: UIButton!
+  
+  // MARK: - Actions
+  
+  @IBAction func startButtonPressed(_ sender: Any) {
+  }
+  
+  @IBAction func styleButtonPressed(_ sender: Any) {
+  }
+  
+  @IBAction func resetButtonPressed(_ sender: Any) {
+  }
+  
+  // MARK: - View Management
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    initSceneView()
+    initScene()
+    initARSession()
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    print("*** ViewWillAppear()")
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    print("*** ViewWillDisappear()")
+  }
+  
+  override func didReceiveMemoryWarning() {
+    super.didReceiveMemoryWarning()
+    print("*** DidReceiveMemoryWarning()")
+  }
+  
+  override var prefersStatusBarHidden: Bool {
+    return true
+  }
+  
+  // MARK: - Initialization
+  
+  func initSceneView() {
+    sceneView.delegate = self
+    sceneView.showsStatistics = true
+    sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints, ARSCNDebugOptions.showWorldOrigin, SCNDebugOptions.showBoundingBoxes, SCNDebugOptions.showWireframe]
+  }
+  
+  func initScene() {
+    let scene = SCNScene(named: "PokerDice.scnassets/SimpleScene.scn")!
+    scene.isPaused = false
+    sceneView.scene = scene
+  }
+  
+  func initARSession() {
+    
+    guard ARWorldTrackingConfiguration.isSupported else {
+        print("*** ARConfig: AR World Tracking Not Supported")
+        return
+    }
+    
+    // 1
+    let config = ARWorldTrackingConfiguration()
+    // 2
+    config.worldAlignment = .gravity
+    // 3
+    config.providesAudioData = false
+    sceneView.session.run(config)
+    
+  }
+}
 
-    @IBOutlet var sceneView: ARSCNView!
-    @IBOutlet weak var statusLabel: UILabel!
-    @IBOutlet weak var startButton: UIButton!
-    @IBOutlet weak var styleButton: UIButton!
-    @IBOutlet weak var resetButton: UIButton!
+extension ViewController : ARSCNViewDelegate {
+  
+  // MARK: - SceneKit Management
+    func renderer(_ renderer: SCNSceneRenderer,
+                  updateAtTime time: TimeInterval) {
+        DispatchQueue.main.async {
+            self.statusLabel.text = self.trackingStatus
+        }
+    }
+  // MARK: - Session State Management
     
-    @IBAction func startButtonPressed(_ sender: Any) {
+    func session(_ session: ARSession,
+                 cameraDidChangeTrackingState camera: ARCamera) {
+        switch camera.trackingState {
+        // 1
+        case .notAvailable:
+            trackingStatus = "Tracking: Not available!"
+        // 2
+        case .normal:
+            trackingStatus = "Tracking: All good!"
+        // 3
+        case .limited(let reason):
+            switch reason {
+            case .excessiveMotion:
+                trackingStatus = "Tracking: Limited due to excessive motion!"
+            // 3.1
+            case .insufficientFeatures:
+                trackingStatus = "Tracking: Limited due to insufficient features!"
+            // 3.2
+            case .initializing:
+                trackingStatus = "Tracking: Initializing..."
+            // 3.3
+            case .relocalizing:
+                trackingStatus = "Tracking: Relocalizing..."
+            }
+        }
     }
     
-    @IBAction func styleButtonPressed(_ sender: Any) {
-    }
-    
-    @IBAction func resetButtonPressed(_ sender: Any) {
-    }
-    
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        // Set the view's delegate
-        sceneView.delegate = self
-        
-        // Show statistics such as fps and timing information
-        sceneView.showsStatistics = true
-        
-        // Create a new scene
-        //let scene = SCNScene(named: "art.scnassets/ship.scn")!
-        let scene = SCNScene(named: "PokerDice.scnassets/SimpleScene.scn")!
-        
-        // Set the scene to the view
-        sceneView.scene = scene
-        
-        statusLabel.text = "Greetings! :]"
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        // Create a session configuration
-        let configuration = ARWorldTrackingConfiguration()
-
-        // Run the view's session
-        sceneView.session.run(configuration)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        // Pause the view's session
-        sceneView.session.pause()
-    }
-
-    // MARK: - ARSCNViewDelegate
-    
-/*
-    // Override to create and configure nodes for anchors added to the view's session.
-    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-        let node = SCNNode()
-     
-        return node
-    }
-*/
-    
-    func session(_ session: ARSession, didFailWithError error: Error) {
-        // Present an error message to the user
-        
+  
+  // MARK: - Session Error Managent
+    func session(_ session: ARSession,
+                 didFailWithError error: Error) {
+        trackingStatus = "AR Session Failure: \(error)"
     }
     
     func sessionWasInterrupted(_ session: ARSession) {
-        // Inform the user that the session has been interrupted, for example, by presenting an overlay
-        
+        trackingStatus = "AR Session Was Interrupted!"
     }
     
     func sessionInterruptionEnded(_ session: ARSession) {
-        // Reset tracking and/or remove existing anchors if consistent tracking is required
-        
+        trackingStatus = "AR Session Interruption Ended"
     }
+    
+  // MARK: - Plane Management
+  
 }
+
